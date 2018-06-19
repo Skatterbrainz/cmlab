@@ -1,9 +1,19 @@
 function Import-CmLabQueries {
+  <#
+  .DESCRIPTION
+    Import or remove custom CM queries using a remote XML template
+  .PARAMETER xmlurl
+    URL to .xml source file.  Default is https://raw.githubusercontent.com/Skatterbrainz/cmlab/master/cmlab-queries.xml
+  .PARAMETER RemoveAll
+    Remove all custom collections from CM site which aredefined in the referenced .xml template
+  #>
   [CmdletBinding()]
   param (
       [parameter(Mandatory=$False, HelpMessage="URI to XML source")]
       [ValidateNotNullOrEmpty()]
-      [string] $xmlurl = 'https://gist.githubusercontent.com/Skatterbrainz/feac5f81de66a4a83ad42b4447b4bffd/raw/676040d9afe83496d9c06f492fbc6c36d37da370/cmlab-queries.xml'
+      [string] $xmlurl = 'https://gist.githubusercontent.com/Skatterbrainz/feac5f81de66a4a83ad42b4447b4bffd/raw/676040d9afe83496d9c06f492fbc6c36d37da370/cmlab-queries.xml',
+      [parameter(Mandatory=$False)]
+      [switch] $RemoveAll
   )
   
   if (!($($(get-location).Provider).Name -eq 'CMSite')) {
@@ -22,18 +32,35 @@ function Import-CmLabQueries {
       $queryText = $($query.'#text').Trim()
       Write-Verbose "name: $queryName"
       Write-Verbose "text: $queryText"
-      try {
-          New-CMQuery -Name $queryName -Expression $queryText -ErrorAction SilentlyContinue
-          Write-Host "creating query: $queryName" -ForegroundColor Green
+      if (!($RemoveAll)) {
+        try {
+            New-CMQuery -Name $queryName -Expression $queryText -ErrorAction SilentlyContinue
+            Write-Host "creating query: $queryName" -ForegroundColor Green
+        }
+        catch {
+            if ($_.Exception.Message -like "*already exists*") {
+                Write-Verbose "query already exists: $queryName"
+            }
+            else {
+                Write-Error $_.Exception.Message
+            }
+        }
       }
-      catch {
-          if ($_.Exception.Message -like "*already exists*") {
-              Write-Verbose "query already exists: $queryName"
+      else {
+        try {
+          Get-CMQuery -Name $queryName | Remove-CMQuery -Force
+          Write-Host "removed: $queryName" -ForegroundColor Green
+        }
+        catch {
+          if ($_.Exception.Message -like "*not found*") {
+            Write-Warning "not found: $queryName"
           }
           else {
-              Write-Error $_.Exception.Message
+            Write-Error $_.Exception.Message
           }
-      }
-  }
+        }
+      } # else
+    } # if
+  } # foreach
   Write-Host "completed" -ForegroundColor Green
 }
