@@ -12,7 +12,7 @@ if (!($cdata.HasChildNodes)) {
 
 foreach ($query in $cdata.config.queries.query) {
     $queryName = $query.Name
-    $queryText = $query.Query
+    $queryText = $($query.'#text').Trim()
     Write-Verbose "name: $queryName"
     Write-Verbose "text: $queryText"
     try {
