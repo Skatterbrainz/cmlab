@@ -1,4 +1,18 @@
 function Import-CmLabCollections {
+    <#
+    .DESCRIPTION
+        Import or remove custom CM collections using a remote XML template
+    .PARAMETER xmlurl
+        URL to .xml source file.  Default is https://raw.githubusercontent.com/Skatterbrainz/cmlab/master/cmlab-queries.xml
+    .PARAMETER DeviceLimitCollectionName
+        Collection name for setting as Limiting Collection for new device collections
+    .PARAMETER UserLimitCollectionName
+        Collection name for setting as Limiting Collection for new user collections
+    .PARAMETER RefreshIntervalDays
+        Collection membership rule evaluation cycle recurrence interval in days. Default is 7 (days)
+    .PARAMETER RemoveAll
+        Remove all custom collections from CM site which aredefined in the referenced .xml template
+    #>
     [CmdletBinding()]
     param (
         [parameter(Mandatory=$False, HelpMessage="URI to XML source")]
