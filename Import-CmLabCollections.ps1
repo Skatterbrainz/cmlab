@@ -1,3 +1,5 @@
+#requires -modules ConfigurationManager
+
 function Import-CmLabCollections {
     <#
     .DESCRIPTION
