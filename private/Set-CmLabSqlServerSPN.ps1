@@ -4,12 +4,14 @@
 function Set-CmLabSqlServerSPN {
   [CmdletBinding()]
   param (
-    [parameter(Mandatory=$False, HelpMessage="SQL Host Name")]
-    [string] $SqlInstance = "cm01.contoso.local",
+    [parameter(Mandatory=$True, HelpMessage="SQL Host Name")]
+    [ValidateNotNullOrEmpty()]
+    [string] $SqlInstance,
     [parameter(Mandatory=$False, HelpMessage="SQL Instance Name")]
     [string] $InstanceName = "MSSQLSvc",
-    [parameter(Mandatory=$False, HelpMessage="SQL Server Account")]
-    [string] $SqlAccount = "contoso\cm-sql"
+    [parameter(Mandatory=$True, HelpMessage="SQL Server Account")]
+    [ValidateNotNullOrEmpty()]
+    [string] $SqlAccount
   )
   $SpnShort = $SqlInstance.split('.')[0]
   if (!(Test-DbaSpn -ComputerName $SqlInstance).InstanceServiceAccount[0] -eq $SqlAccount) {
