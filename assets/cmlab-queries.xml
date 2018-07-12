@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config version="2018.06.21.01" comment="sample queries for cmlab">
+	<queries>
+		<query name="Computers - HW Inventory Older than 30 Days" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Name  not in (select SMS_R_System.Name
+from SMS_R_System inner join SMS_G_System_WORKSTATION_STATUS on SMS_G_System_WORKSTATION_STATUS.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_WORKSTATION_STATUS.LastHardwareScan >= DateAdd(dd,-30,GetDate()))
+		</query>
+		<query name="Computers - No Client" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.Client is null
+		</query>
+		<query name="Computers - Windows 10" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 10%"
+		</query>
+		<query name="Computers - Windows 10 1703" type="SMS_R_System">
+select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceId = SMS_R_System.ResourceId where SMS_G_System_OPERATING_SYSTEM.BuildNumber = "15063"
+		</query>
+		<query name="Computers - Windows 10 1803" type="SMS_R_System">
+select * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceId = SMS_R_System.ResourceId where SMS_G_System_OPERATING_SYSTEM.BuildNumber = "16299"
+		</query>
+		<query name="Computers - Windows 8.1" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.3%"
+		</query>
+		<query name="Computers - Windows 8" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.2%"
+		</query>
+		<query name="Computers - Windows 7" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.1%"
+		</query>
+		<query name="Computers - Windows Vista" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.0%"
+		</query>
+		<query name="Computers - Windows XP" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 5.1%"
+		</query>
+		<query name="Computers - 32-bit Windows" type="SMS_R_System">
+select distinct * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceId where SMS_G_System_OPERATING_SYSTEM.OSArchitecture != "64-bit"
+		</query>
+		<query name="Computers - Dell Devices" type="SMS_R_System">
+select distinct SMS_G_System_COMPUTER_SYSTEM.Manufacturer, SMS_G_System_COMPUTER_SYSTEM.Model
+from SMS_R_System inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "Dell%"
+		</query>
+		<query name="Computers - HP Devices" type="SMS_R_System">
+select distinct SMS_G_System_COMPUTER_SYSTEM.Manufacturer, SMS_G_System_COMPUTER_SYSTEM.Model
+from SMS_R_System inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "HP%" or SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "Hewlett%"
+		</query>
+		<query name="Computers - Lenovo Devices" type="SMS_R_System">
+select distinct SMS_G_System_COMPUTER_SYSTEM.Manufacturer, SMS_G_System_COMPUTER_SYSTEM.Model
+from SMS_R_System inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "Lenovo%"
+		</query>
+		<query name="Computers - Domain Controllers" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client 
+from SMS_R_System where SMS_R_System.SystemOUName like "%DOMAIN CONTROLLERS"
+		</query>
+		<query name="Computers - Windows Server 2016" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 10.0%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 10.0%"
+		</query>
+		<query name="Computers - Windows Server 2012 R2" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 6.3%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 6.3%"
+		</query>
+		<query name="Computers - Windows Server 2012" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 6.2%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 6.2%"
+		</query>
+		<query name="Computers - Windows Server 2008 R2" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 6.1%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 6.1%"
+		</query>
+		<query name="Computers - SQL Server 2017" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.ResourceId in (select distinct SMS_G_System_ADD_REMOVE_PROGRAMS.ResourceID
+from SMS_G_System_ADD_REMOVE_PROGRAMS where SMS_G_System_ADD_REMOVE_PROGRAMS.DisplayName = 'Microsoft SQL Server 2017')
+		</query>
+		<query name="Computers - ConfigMgr Console Installed" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.ResourceId in (select distinct SMS_G_System_ADD_REMOVE_PROGRAMS.ResourceID
+from SMS_G_System_ADD_REMOVE_PROGRAMS where SMS_G_System_ADD_REMOVE_PROGRAMS.DisplayName = 'System Center Configuration Manager Console')
+		</query>
+		<query name="Computers - SQL Server 2008" type="SMS_R_System">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.ResourceId in (select distinct SMS_G_System_ADD_REMOVE_PROGRAMS.ResourceID
+from SMS_G_System_ADD_REMOVE_PROGRAMS where SMS_G_System_ADD_REMOVE_PROGRAMS.DisplayName = 'Microsoft SQL Server 2008')
+		</query>
+		<query name="Computers - MAC, Serial, Model, Name" type="SMS_R_System">
+select distinct SMS_R_System.Name, SMS_R_System.MACAddresses, SMS_G_System_SYSTEM_ENCLOSURE.SerialNumber, 
+SMS_G_System_COMPUTER_SYSTEM.Model from SMS_R_System inner join SMS_G_System_SYSTEM_ENCLOSURE on 
+SMS_G_System_SYSTEM_ENCLOSURE.ResourceID = SMS_R_System.ResourceId 
+inner join SMS_G_System_COMPUTER_SYSTEM on 
+SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId 
+order by SMS_R_System.Name
+		</query>
+		<query name="Users - Dept - Sales" type="SMS_R_User">
+select distinct SMS_R_User.Name, SMS_R_User.FullUserName, SMS_R_User.title, SMS_R_User.department from  SMS_R_User 
+where SMS_R_User.department = "Sales" order by SMS_R_User.Name
+		</query>
+	</queries>
+</config>
