@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config version="2018.06.21.01" comment="sample collections for cmlab">
+	<collections>
+		<collection name="Computers - No Client" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.Client is null
+		</collection>
+		<collection name="Computers - All - Windows 10" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 10%"
+		</collection>
+		<collection name="Computers - Clients - Windows 10 1703" type="device" limit="All Desktop and Server Clients">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_G_System_OPERATING_SYSTEM.BuildNumber = "15063"
+		</collection>
+		<collection name="Computers - Clients - Windows 10 1709" type="device" limit="All Desktop and Server Clients">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_G_System_OPERATING_SYSTEM.BuildNumber = "16299"
+		</collection>
+		<collection name="Computers - Clients - Windows 10 1803" type="device" limit="All Desktop and Server Clients">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_G_System_OPERATING_SYSTEM.BuildNumber = "17134"
+		</collection>
+		<collection name="Computers - All - Windows 8.1" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.3%"
+		</collection>
+		<collection name="Computers - Windows 8" type="device">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.2%"
+		</collection>
+		<collection name="Computers - All - Windows 7" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.1%"
+		</collection>
+		<collection name="Computers - All - Windows Vista" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 6.0%"
+		</collection>
+		<collection name="Computers - All - Windows XP" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Workstation 5.1%"
+		</collection>
+		<collection name="Computers - All - 32-bit Windows" type="device" limit="All Systems">
+select distinct * from SMS_R_System inner join SMS_G_System_OPERATING_SYSTEM on SMS_G_System_OPERATING_SYSTEM.ResourceID = SMS_R_System.ResourceId where SMS_G_System_OPERATING_SYSTEM.OSArchitecture != "64-bit"
+		</collection>
+		<collection name="Computers - Clients - Dell" type="device" limit="All Desktop and Server Clients">
+select distinct SMS_G_System_COMPUTER_SYSTEM.Manufacturer, SMS_G_System_COMPUTER_SYSTEM.Model
+from SMS_R_System inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "Dell%"
+		</collection>
+		<collection name="Computers - Clients - HP" type="device" limit="All Desktop and Server Clients">
+select distinct SMS_G_System_COMPUTER_SYSTEM.Manufacturer, SMS_G_System_COMPUTER_SYSTEM.Model
+from SMS_R_System inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "HP%" or SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "Hewlett%"
+		</collection>
+		<collection name="Computers - Clients - Lenovo" type="device" limit="All Desktop and Server Clients">
+select distinct SMS_G_System_COMPUTER_SYSTEM.Manufacturer, SMS_G_System_COMPUTER_SYSTEM.Model
+from SMS_R_System inner join SMS_G_System_COMPUTER_SYSTEM on SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId
+where SMS_G_System_COMPUTER_SYSTEM.Manufacturer like "Lenovo%"
+		</collection>
+		<collection name="Computers - All - Domain Controllers" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client 
+from SMS_R_System where SMS_R_System.SystemOUName = "CONTOSO.LOCAL/DOMAIN CONTROLLERS"
+		</collection>
+		<collection name="Computers - All - Windows Server 2016" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 10.0%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 10%"
+		</collection>
+		<collection name="Computers - All - Windows Server 2012 R2" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 6.3%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 6.3%"
+		</collection>
+		<collection name="Computers - All - Windows Server 2012" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 6.2%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 6.2%"
+		</collection>
+		<collection name="Computers - All - Windows Server 2008 R2" type="device" limit="All Systems">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_System.OperatingSystemNameandVersion,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client
+from SMS_R_System where SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT Server 6.1%"
+OR SMS_R_System.OperatingSystemNameandVersion like "Microsoft Windows NT %Server 6.1%"
+		</collection>
+		<collection name="Computers - Clients - SQL Server 2017" type="device" limit="All Desktop and Server Clients">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.ResourceId in (select distinct SMS_G_System_ADD_REMOVE_PROGRAMS.ResourceID
+from SMS_G_System_ADD_REMOVE_PROGRAMS where SMS_G_System_ADD_REMOVE_PROGRAMS.DisplayName = 'Microsoft SQL Server 2017')
+		</collection>
+		<collection name="Computers - Clients - SQL Server 2008" type="device" limit="All Desktop and Server Clients">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.ResourceId in (select distinct SMS_G_System_ADD_REMOVE_PROGRAMS.ResourceID
+from SMS_G_System_ADD_REMOVE_PROGRAMS where SMS_G_System_ADD_REMOVE_PROGRAMS.DisplayName = 'Microsoft SQL Server 2008')
+		</collection>
+		<collection name="Computers - MAC, Serial, Model, Name" type="device" limit="All Systems">
+select distinct SMS_R_System.Name, SMS_R_System.MACAddresses, SMS_G_System_SYSTEM_ENCLOSURE.SerialNumber, 
+SMS_G_System_COMPUTER_SYSTEM.Model from SMS_R_System inner join SMS_G_System_SYSTEM_ENCLOSURE on 
+SMS_G_System_SYSTEM_ENCLOSURE.ResourceID = SMS_R_System.ResourceId inner join SMS_G_System_COMPUTER_SYSTEM on 
+SMS_G_System_COMPUTER_SYSTEM.ResourceID = SMS_R_System.ResourceId order by SMS_R_System.Name
+		</collection>
+		<collection name="Computers - Clients - ConfigMgr Console Installed" type="device" limit="All Desktop and Server Clients">
+select SMS_R_SYSTEM.ResourceID, SMS_R_SYSTEM.ResourceType, SMS_R_SYSTEM.Name, SMS_R_SYSTEM.SMSUniqueIdentifier,
+SMS_R_SYSTEM.ResourceDomainORWorkgroup, SMS_R_SYSTEM.Client from SMS_R_System
+where SMS_R_System.ResourceId in (select distinct SMS_G_System_ADD_REMOVE_PROGRAMS.ResourceID
+from SMS_G_System_ADD_REMOVE_PROGRAMS where SMS_G_System_ADD_REMOVE_PROGRAMS.DisplayName = 'System Center Configuration Manager Console')
+		</collection>
+		<collection name="Users - Dept - Finance" type="user" limit="All Users">
+select distinct SMS_R_User.Name, SMS_R_User.FullUserName, SMS_R_User.title, SMS_R_User.department from SMS_R_User 
+where SMS_R_User.department = "Finance" order by SMS_R_User.Name
+		</collection>
+		<collection name="Users - Title - Engineer" type="user" limit="All Users">
+select distinct SMS_R_User.Name, SMS_R_User.FullUserName, SMS_R_User.title, SMS_R_User.department from SMS_R_User 
+where SMS_R_User.title = "Engineer" order by SMS_R_User.Name
+		</collection>
+	</collections>
+	<collection name="Clients - Server Role - File Servers" type="device" comment="File Servers" limit="All Desktop and Server Clients">
+select distinct SMS_R_SYSTEM.ResourceID,SMS_R_SYSTEM.ResourceType,SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client from SMS_R_System inner join SMS_G_System_SERVER_FEATURE on SMS_G_System_SERVER_FEATURE.ResourceId = SMS_R_System.ResourceId where SMS_G_System_SERVER_FEATURE.Name = 'File and Storage Services'
+	</collection>
+	<collection name="Clients - Server Role - Web Servers" type="device" comment="Web Servers" limit="All Desktop and Server Clients">
+select distinct SMS_R_SYSTEM.ResourceID,SMS_R_SYSTEM.ResourceType,SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client from SMS_R_System inner join SMS_G_System_SERVER_FEATURE on SMS_G_System_SERVER_FEATURE.ResourceId = SMS_R_System.ResourceId where SMS_G_System_SERVER_FEATURE.Name = 'Web Server (IIS)'
+	</collection>
+	<collection name="Clients - Server Role - WSUS Servers" type="device" comment="WSUS Servers" limit="All Desktop and Server Clients">
+select distinct SMS_R_SYSTEM.ResourceID,SMS_R_SYSTEM.ResourceType,SMS_R_SYSTEM.Name,SMS_R_SYSTEM.SMSUniqueIdentifier,SMS_R_SYSTEM.ResourceDomainORWorkgroup,SMS_R_SYSTEM.Client from SMS_R_System inner join SMS_G_System_SERVER_FEATURE on SMS_G_System_SERVER_FEATURE.ResourceId = SMS_R_System.ResourceId where SMS_G_System_SERVER_FEATURE.Name = 'WSUS Services'
+	</collection>
+</config>
