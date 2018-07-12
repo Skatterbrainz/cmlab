@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<config version="2018.06.19.02" comment="cm lab applications list">
-	<applications>
-		<application name="7-Zip" version="18.05" url="https://www.7-zip.org/a/7z1805.msi,https://www.7-zip.org/a/7z1805-x64.msi" icon="" />
-		<application name="Notepad++" version="7.5.6" url="https://notepad-plus-plus.org/repository/7.x/7.5.6/npp.7.5.6.Installer.exe,https://notepad-plus-plus.org/repository/7.x/7.5.6/npp.7.5.6.Installer.x64.exe" icon="" />
-		<application name="VLC Player" version="3.0.3" url="https://get.videolan.org/vlc/3.0.3/win32/vlc-3.0.3-win32.exe,https://get.videolan.org/vlc/3.0.3/win64/vlc-3.0.3-win64.exe" icon="" />
-	</applications>
-</config>
