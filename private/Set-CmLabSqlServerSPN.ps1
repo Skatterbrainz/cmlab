@@ -1,5 +1,15 @@
 #requires -modules dbatools
 #requires -modules ConfigurationManager
+<#
+.SYNOPSIS
+  Register SPN for SQL Instance and associated account
+.PARAMETER SqlInstance
+  Server FQDN Host Name
+.PARAMETER InstanceName
+  Name of SQL Instance.  Default is "MSSQLSvc"
+.PARAMETER SqlAccount
+  Name of SQL service account. Example "contoso\sql-svc"
+#>
 
 function Set-CmLabSqlServerSPN {
   [CmdletBinding()]
